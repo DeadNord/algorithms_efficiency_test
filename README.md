@@ -5,12 +5,13 @@
 | Rabin-Karp         | 0.005156 sec            | 3.049817 sec            | 0.002786 sec            | 3.761100 sec            |
 | String-Search      | 0.145096 sec            | 0.001653 sec            | 0.184933 sec            | 0.002083 sec            |
 
-| Algorithm          | Real Substring (Text 1) | Fake Substring (Text 1) | Real Substring (Text 2) | Fake Substring (Text 2) |
+![Alt text](/images/image.png) ![Alt text](/images/image-1.png)
+| Algorithm | Real Substring (Text 1) | Fake Substring (Text 1) | Real Substring (Text 2) | Fake Substring (Text 2) |
 | ------------------ | ----------------------- | ----------------------- | ----------------------- | ----------------------- |
-| Boyer-Moore        | 0.016007 sec            | -                       | 0.004618 sec            | -                       |
-| Knuth-Morris-Pratt | 0.009685 sec            | -                       | 0.002512 sec            | -                       |
-| Rabin-Karp         | 0.002980 sec            | -                       | 0.001604 sec            | -                       |
-| String-Search      | 0.101317 sec            | -                       | 0.162526 sec            | -                       |
+| Boyer-Moore | 0.016007 sec | - | 0.004618 sec | - |
+| Knuth-Morris-Pratt | 0.009685 sec | - | 0.002512 sec | - |
+| Rabin-Karp | 0.002980 sec | - | 0.001604 sec | - |
+| String-Search | 0.101317 sec | - | 0.162526 sec | - |
 
 | Algorithm          | Real Substring (Text 1) | Fake Substring (Text 1) | Real Substring (Text 2) | Fake Substring (Text 2) |
 | ------------------ | ----------------------- | ----------------------- | ----------------------- | ----------------------- |

@@ -126,9 +126,7 @@ def main(text_file1, text_file2, real_data=True, fake_data=True):
     ]
 
     # Вивід таблички
-    print(
-        "======================================================================================================================================================"
-    )
+    print()
     print(tabulate(table, headers="firstrow", tablefmt="github"))
 
     # Вивід графіка
