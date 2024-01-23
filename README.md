@@ -5,6 +5,7 @@ Real & Fake Pattern.
 | Knuth-Morris-Pratt | 0.005066 sec | 1.287703 sec | 0.003164 sec | 1.949856 sec |
 | Rabin-Karp | 0.005156 sec | 3.049817 sec | 0.002786 sec | 3.761100 sec |
 | String-Search | 0.145096 sec | 0.001653 sec | 0.184933 sec | 0.002083 sec |
+
 ![Alt text](/images/image-0.png) ![Alt text](/images/image-1.png)
 
 Only Real Pattern.
@@ -14,6 +15,7 @@ Only Real Pattern.
 | Knuth-Morris-Pratt | 0.009685 sec | - | 0.002512 sec | - |
 | Rabin-Karp | 0.002980 sec | - | 0.001604 sec | - |
 | String-Search | 0.101317 sec | - | 0.162526 sec | - |
+
 ![Alt text](/images/image-2.png)![Alt text](/images/image-3.png)
 
 Only Fake Pattern.
@@ -23,4 +25,5 @@ Only Fake Pattern.
 | Knuth-Morris-Pratt | - | 1.208102 sec | - | 2.058599 sec |
 | Rabin-Karp | - | 2.940864 sec | - | 4.205234 sec |
 | String-Search | - | 0.001672 sec | - | 0.002048 sec |
+
 ![Alt text](/images/image-4.png)![Alt text](/images/image-5.png)
