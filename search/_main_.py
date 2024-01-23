@@ -150,20 +150,20 @@ def main(text_file1, text_file2, real_data=True, fake_data=True):
 
 if __name__ == "__main__":
     main(
-        "./search/ds/article_1.txt",
-        "./search/ds/article_2.txt",
+        "./search/data/article_1.txt",
+        "./search/data/article_2.txt",
         real_data=True,
         fake_data=True,
     )
     main(
-        "./search/ds/article_1.txt",
-        "./search/ds/article_2.txt",
+        "./search/data/article_1.txt",
+        "./search/data/article_2.txt",
         real_data=True,
         fake_data=False,
     )
     main(
-        "./search/ds/article_1.txt",
-        "./search/ds/article_2.txt",
+        "./search/data/article_1.txt",
+        "./search/data/article_2.txt",
         real_data=False,
         fake_data=True,
     )
