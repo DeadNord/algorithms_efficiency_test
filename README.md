@@ -5,7 +5,8 @@ Real & Fake Pattern.
 | Knuth-Morris-Pratt | 0.000006 sec | 0.000654 sec | 0.000006 sec | 0.000929 sec |
 | Rabin-Karp | 0.000012 sec | 0.001496 sec | 0.000012 sec | 0.002212 sec |
 | String-Search | 0.000112 sec | 0.000003 sec | 0.000112 sec | 0.000002 sec |
-![Alt text](/images/image-0.png)! | [Alt text](/images/image-1.png)
+
+![Alt text](/images/image-0.png) ![Alt text](/images/image-1.png)
 
 Only Real Pattern.
 | Algorithm | Real Substring (Text 1) | Fake Substring (Text 1) | Real Substring (Text 2) | Fake Substring (Text 2) |
