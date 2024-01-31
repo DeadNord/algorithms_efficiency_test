@@ -1,47 +1,48 @@
-import timeit
 from tabulate import tabulate
 import matplotlib.pyplot as plt
+import sys
+import importlib.util
+
+module_path = "src/helper/time_measurer"
+if module_path not in sys.path:
+    sys.path.append(module_path)
+time_measurer_module = importlib.import_module("time_measurer")
+TimeMeasurer = time_measurer_module.TimeMeasurer
 
 
 class StringSearchAlgorithm:
+    def __init__(self):
+        self.search_func = None
+
     def search(self, text, pattern):
-        raise NotImplementedError("Search method not implemented")
+        if self.search_func:
+            return self.search_func(text, pattern)
+        else:
+            raise NotImplementedError("Search method not implemented")
 
 
 class BoyerMoore(StringSearchAlgorithm):
     def __init__(self):
-        from boyer_moore import (
-            boyer_moore as bm_search,
-        )
+        super().__init__()
+        from boyer_moore import boyer_moore
 
-        self.search_func = bm_search
-
-    def search(self, text, pattern):
-        return self.search_func(text, pattern)
+        self.search_func = boyer_moore
 
 
 class KnuthMorrisPratt(StringSearchAlgorithm):
     def __init__(self):
-        from knuth_morris_pratt import (
-            knuth_morris_pratt as kmp_search,
-        )
+        super().__init__()
+        from knuth_morris_pratt import knuth_morris_pratt
 
-        self.search_func = kmp_search
-
-    def search(self, text, pattern):
-        return self.search_func(text, pattern)
+        self.search_func = knuth_morris_pratt
 
 
 class RabinKarp(StringSearchAlgorithm):
     def __init__(self):
-        from rabin_karp import (
-            rabin_karp as rk_search,
-        )
+        super().__init__()
+        from rabin_karp import rabin_karp
 
-        self.search_func = rk_search
-
-    def search(self, text, pattern):
-        return self.search_func(text, pattern)
+        self.search_func = rabin_karp
 
 
 class StringSearch(StringSearchAlgorithm):
@@ -70,15 +71,6 @@ class StringSearchHandler:
         if not algorithm:
             raise ValueError(f"Algorithm {algorithm_name} not found")
         return algorithm.search(text, pattern)
-
-
-class TimeMeasurer:
-    @staticmethod
-    def measure_time(func, *args):
-        start_time = timeit.default_timer()
-        result = func(*args)
-        end_time = timeit.default_timer()
-        return result, end_time - start_time
 
 
 class ResultPlotter:
@@ -230,7 +222,9 @@ class MainProgram:
 
 
 if __name__ == "__main__":
-    program = MainProgram("./search/data/article_1.txt", "./search/data/article_2.txt")
+    program = MainProgram(
+        "./src/search/data/article_1.txt", "./src/search/data/article_2.txt"
+    )
     program.run(real_data=True, fake_data=True)
     program.run(real_data=True, fake_data=False)
     program.run(real_data=False, fake_data=True)
