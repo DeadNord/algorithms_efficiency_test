@@ -73,33 +73,46 @@ class StringSearchHandler:
         return algorithm.search(text, pattern)
 
 
-class ResultPlotter:
+class ResultHandler:
+    @staticmethod
+    def display_table(data, headers):
+        print(tabulate(data, headers=headers, tablefmt="pipe"))
+
     @staticmethod
     def plot_results(algorithms, real_times, fake_times, title):
         plt.figure(figsize=(10, 6))
         x = range(len(algorithms))
         width = 0.4
 
-        if real_times and fake_times:
-            # Оба набора данных доступны
-            plt.bar(x, real_times, width=width, label="Real Data", align="center")
+        real_times_list = (
+            [real_times[alg][0] for alg in algorithms if real_times[alg]]
+            if real_times
+            else []
+        )
+        fake_times_list = (
+            [fake_times[alg][0] for alg in algorithms if fake_times[alg]]
+            if fake_times
+            else []
+        )
+
+        if real_times_list and fake_times_list:
+            plt.bar(x, real_times_list, width=width, label="Real Data", align="center")
             plt.bar(
                 [i + width for i in x],
-                fake_times,
+                fake_times_list,
                 width=width,
                 label="Fake Data",
                 align="center",
             )
-            plt.xticks([i + width / 2 for i in x], algorithms)
-        elif real_times:
-            # Только реальные данные
-            plt.bar(x, real_times, width=width, label="Real Data", align="center")
-            plt.xticks(x, algorithms)
-        elif fake_times:
-            # Только фейковые данные
-            plt.bar(x, fake_times, width=width, label="Fake Data", align="center")
-            plt.xticks(x, algorithms)
+        elif real_times_list:
+            plt.bar(x, real_times_list, width=width, label="Real Data", align="center")
+        elif fake_times_list:
+            plt.bar(x, fake_times_list, width=width, label="Fake Data", align="center")
 
+        plt.xticks(
+            [i + width / 2 for i in x] if real_times_list and fake_times_list else x,
+            algorithms,
+        )
         plt.xlabel("Algorithms")
         plt.ylabel("Execution Time (seconds)")
         plt.title(title)
@@ -113,7 +126,6 @@ class MainProgram:
         self.text2 = self.read_text_file(text_file2)
         self.searcher = StringSearchHandler()
         self.measurer = TimeMeasurer()
-        self.plotter = ResultPlotter()
 
     def read_text_file(self, file_path):
         with open(file_path, "rb") as file:
@@ -126,94 +138,81 @@ class MainProgram:
             "Rabin_Karp",
             "String_Search",
         ]
+
+        real_times_text1, real_times_text2 = {alg: [] for alg in algorithms}, {
+            alg: [] for alg in algorithms
+        }
+        fake_times_text1, fake_times_text2 = {alg: [] for alg in algorithms}, {
+            alg: [] for alg in algorithms
+        }
+
         real_pattern_text1 = self.text1[200:205] if real_data else ""
         real_pattern_text2 = self.text2[300:305] if real_data else ""
         fake_pattern = "abcdefgh" if fake_data else ""
 
-        real_times_text1, real_times_text2, fake_times_text1, fake_times_text2 = (
-            [],
-            [],
-            [],
-            [],
-        )
-
         for algorithm in algorithms:
             if real_data:
-                _, real_time_text1 = self.measurer.measure_time(
+                _, time_text1 = self.measurer.measure_time(
                     self.searcher.perform_search,
                     algorithm,
                     self.text1,
                     real_pattern_text1,
                 )
-                _, real_time_text2 = self.measurer.measure_time(
+                _, time_text2 = self.measurer.measure_time(
                     self.searcher.perform_search,
                     algorithm,
                     self.text2,
                     real_pattern_text2,
                 )
-                real_times_text1.append(real_time_text1)
-                real_times_text2.append(real_time_text1)
+                real_times_text1[algorithm].append(time_text1)
+                real_times_text2[algorithm].append(time_text2)
 
             if fake_data:
-                _, fake_time_text1 = self.measurer.measure_time(
+                _, time_text1 = self.measurer.measure_time(
                     self.searcher.perform_search, algorithm, self.text1, fake_pattern
                 )
-                _, fake_time_text2 = self.measurer.measure_time(
+                _, time_text2 = self.measurer.measure_time(
                     self.searcher.perform_search, algorithm, self.text2, fake_pattern
                 )
-                fake_times_text1.append(fake_time_text1)
-                fake_times_text2.append(fake_time_text2)
+                fake_times_text1[algorithm].append(time_text1)
+                fake_times_text2[algorithm].append(time_text2)
 
-        # Формування та виведення таблиць результатів з урахуванням наявності реальних та фейкових даних
-        table = [
-            [
-                "Algorithm",
-                "Real Substring (Text 1)",
-                "Fake Substring (Text 1)",
-                "Real Substring (Text 2)",
-                "Fake Substring (Text 2)",
-            ],
-            [
-                "Boyer-Moore",
-                f"{real_times_text1[0]:.6f} sec" if real_times_text1 else "-",
-                f"{fake_times_text1[0]:.6f} sec" if fake_times_text1 else "-",
-                f"{real_times_text2[0]:.6f} sec" if real_times_text2 else "-",
-                f"{fake_times_text2[0]:.6f} sec" if fake_times_text2 else "-",
-            ],
-            [
-                "Knuth-Morris-Pratt",
-                f"{real_times_text1[1]:.6f} sec" if real_times_text1 else "-",
-                f"{fake_times_text1[1]:.6f} sec" if fake_times_text1 else "-",
-                f"{real_times_text2[1]:.6f} sec" if real_times_text2 else "-",
-                f"{fake_times_text2[1]:.6f} sec" if fake_times_text2 else "-",
-            ],
-            [
-                "Rabin-Karp",
-                f"{real_times_text1[2]:.6f} sec" if real_times_text1 else "-",
-                f"{fake_times_text1[2]:.6f} sec" if fake_times_text1 else "-",
-                f"{real_times_text2[2]:.6f} sec" if real_times_text2 else "-",
-                f"{fake_times_text2[2]:.6f} sec" if fake_times_text2 else "-",
-            ],
-            [
-                "String-Search",
-                f"{real_times_text1[3]:.6f} sec" if real_times_text1 else "-",
-                f"{fake_times_text1[3]:.6f} sec" if fake_times_text1 else "-",
-                f"{real_times_text2[3]:.6f} sec" if real_times_text2 else "-",
-                f"{fake_times_text2[3]:.6f} sec" if fake_times_text2 else "-",
-            ],
+        table_data = []
+        for algorithm in algorithms:
+            row = [
+                algorithm,
+                f"{real_times_text1[algorithm][0]:.6f} sec"
+                if real_times_text1[algorithm]
+                else "-",
+                f"{fake_times_text1[algorithm][0]:.6f} sec"
+                if fake_times_text1[algorithm]
+                else "-",
+                f"{real_times_text2[algorithm][0]:.6f} sec"
+                if real_times_text2[algorithm]
+                else "-",
+                f"{fake_times_text2[algorithm][0]:.6f} sec"
+                if fake_times_text2[algorithm]
+                else "-",
+            ]
+            table_data.append(row)
+
+        headers = [
+            "Algorithm",
+            "Real Substring (Text 1)",
+            "Fake Substring (Text 1)",
+            "Real Substring (Text 2)",
+            "Fake Substring (Text 2)",
         ]
-
-        print()
-        print(tabulate(table, headers="firstrow", tablefmt="github"))
+        ResultHandler.display_table(table_data, headers)
 
         if real_data or fake_data:
-            self.plotter.plot_results(
+            ResultHandler.plot_results(
                 algorithms,
                 real_times_text1 if real_data else [],
                 fake_times_text1 if fake_data else [],
                 "Performance in Text 1",
             )
-            self.plotter.plot_results(
+            ResultHandler.plot_results(
                 algorithms,
                 real_times_text2 if real_data else [],
                 fake_times_text2 if fake_data else [],

@@ -61,12 +61,20 @@ class SortingHandler:
         return algorithm.sort(data)
 
 
-class ResultPlotter:
+class ResultHandler:
+    @staticmethod
+    def display_table(data_sizes, results):
+        headers = ["Data Size"] + list(results.keys())
+        table_data = [
+            [size] + [results[algorithm][i] for algorithm in results]
+            for i, size in enumerate(data_sizes)
+        ]
+        print(tabulate(table_data, headers=headers, tablefmt="pipe"))
+
     @staticmethod
     def plot_results(data_sizes, results):
-        for algorithm, execution_time in results.items():
-            plt.plot(data_sizes, execution_time, label=algorithm)
-
+        for algorithm, execution_times in results.items():
+            plt.plot(data_sizes, execution_times, label=algorithm)
         plt.xlabel("Data Size")
         plt.ylabel("Execution Time (seconds)")
         plt.title("Sorting Algorithm Comparison")
@@ -82,26 +90,17 @@ class MainProgram:
         self.results = {alg: [] for alg in self.sorter.algorithms}
 
     def run(self):
-        all_results = []
-
         for size in self.data_sizes:
             data = generate_random_data(size)
-            row = [size]
 
             for title in self.sorter.algorithms:
                 _, execution_time = self.measurer.measure_time(
                     self.sorter.perform_sorting, title, data
                 )
-
                 self.results[title].append(execution_time)
-                row.append(execution_time)
 
-            all_results.append(row)
-
-        headers = ["Data Size"] + list(self.sorter.algorithms.keys())
-        print(tabulate(all_results, headers=headers, tablefmt="pipe"))
-
-        ResultPlotter.plot_results(self.data_sizes, self.results)
+        ResultHandler.display_table(self.data_sizes, self.results)
+        ResultHandler.plot_results(self.data_sizes, self.results)
 
 
 def generate_random_data(size):

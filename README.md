@@ -2,32 +2,31 @@
 
 Real & Fake Pattern.
 | Algorithm | Real Substring (Text 1) | Fake Substring (Text 1) | Real Substring (Text 2) | Fake Substring (Text 2) |
-|--------------------|---------------------------|---------------------------|---------------------------|---------------------------|
-| Boyer-Moore | 0.000012 sec | 0.000318 sec | 0.000012 sec | 0.000444 sec |
-| Knuth-Morris-Pratt | 0.000006 sec | 0.000654 sec | 0.000006 sec | 0.000929 sec |
-| Rabin-Karp | 0.000012 sec | 0.001496 sec | 0.000012 sec | 0.002212 sec |
-| String-Search | 0.000112 sec | 0.000003 sec | 0.000112 sec | 0.000002 sec |
+|:-------------------|:--------------------------|:--------------------------|:--------------------------|:--------------------------|
+| Boyer_Moore | 0.000012 sec | 0.000312 sec | 0.000003 sec | 0.000429 sec |
+| Knuth_Morris_Pratt | 0.000007 sec | 0.000678 sec | 0.000007 sec | 0.000932 sec |
+| Rabin_Karp | 0.000013 sec | 0.001516 sec | 0.000004 sec | 0.002235 sec |
+| String_Search | 0.000110 sec | 0.000003 sec | 0.000142 sec | 0.000003 sec |
 
 ![Alt text](src/assets/images/image-0.png)![Alt text](src/assets/images/image-1.png)
 
 Only Real Pattern.
 | Algorithm | Real Substring (Text 1) | Fake Substring (Text 1) | Real Substring (Text 2) | Fake Substring (Text 2) |
-|--------------------|---------------------------|---------------------------|---------------------------|---------------------------|
-| Boyer-Moore | 0.000046 sec | - | 0.000046 sec | - |
-| Knuth-Morris-Pratt | 0.000020 sec | - | 0.000020 sec | - |
-| Rabin-Karp | 0.000026 sec | - | 0.000026 sec | - |
-| String-Search | 0.000383 sec | - | 0.000383 sec | - |
+|:-------------------|:--------------------------|:--------------------------|:--------------------------|:--------------------------|
+| Boyer_Moore | 0.000044 sec | - | 0.000011 sec | - |
+| Knuth_Morris_Pratt | 0.000019 sec | - | 0.000009 sec | - |
+| Rabin_Karp | 0.000024 sec | - | 0.000010 sec | - |
+| String_Search | 0.000380 sec | - | 0.000464 sec | - |
 
 ![Alt text](src/assets/images/image-2.png)![Alt text](src/assets/images/image-3.png)
 
 Only Fake Pattern.
 | Algorithm | Real Substring (Text 1) | Fake Substring (Text 1) | Real Substring (Text 2) | Fake Substring (Text 2) |
-|--------------------|---------------------------|---------------------------|---------------------------|---------------------------|
-| Boyer-Moore | - | 0.002874 sec | - | 0.002798 sec |
-| Knuth-Morris-Pratt | - | 0.003539 sec | - | 0.004640 sec |
-| Rabin-Karp | - | 0.009259 sec | - | 0.008551 sec |
-| String-Search | - | 0.000020 sec | - | 0.000012 sec |
-
+|:-------------------|:--------------------------|:--------------------------|:--------------------------|:--------------------------|
+| Boyer_Moore | - | 0.001216 sec | - | 0.001216 sec |
+| Knuth_Morris_Pratt | - | 0.002180 sec | - | 0.003429 sec |
+| Rabin_Karp | - | 0.006202 sec | - | 0.004661 sec |
+| String_Search | - | 0.000013 sec | - | 0.000008 sec |
 ![Alt text](src/assets/images/image-4.png)![Alt text](src/assets/images/image-5.png)
 
 # SORT ALGORITM

@@ -12,47 +12,70 @@ time_measurer_module = importlib.import_module("time_measurer")
 TimeMeasurer = time_measurer_module.TimeMeasurer
 
 
-def main(denominations, test_amounts):
-    greedy_maker = GreedyChangeMaker(denominations)
-    dynamic_maker = DynamicChangeMaker(denominations)
+class ChangeMakerHandler:
+    def __init__(self, denominations):
+        self.greedy_maker = GreedyChangeMaker(denominations)
+        self.dynamic_maker = DynamicChangeMaker(denominations)
 
+    def find_coins_greedy(self, amount):
+        return self.greedy_maker.find_coins(amount)
+
+    def find_coins_dynamic(self, amount):
+        return self.dynamic_maker.find_coins(amount)
+
+
+class ResultHandler:
+    @staticmethod
+    def plot_results(test_amounts, greedy_times, dynamic_times):
+        plt.plot(test_amounts, greedy_times, label="Greedy Algorithm", marker="o")
+        plt.plot(test_amounts, dynamic_times, label="Dynamic Algorithm", marker="o")
+        plt.xlabel("Amount")
+        plt.ylabel("Time (s)")
+        plt.title("Algorithm Performance Comparison")
+        plt.legend()
+        plt.show()
+
+    @staticmethod
+    def display_tables(algorithm_results, times):
+        result_headers = ["Amount", "Greedy Result", "Dynamic Result"]
+        result_table = tabulate(
+            algorithm_results, headers=result_headers, tablefmt="pipe"
+        )
+        print(result_table + "\n")
+
+        time_headers = [
+            "Amount",
+            "Greedy Algorithm Time (s)",
+            "Dynamic Algorithm Time (s)",
+        ]
+        time_table = tabulate(times, headers=time_headers, tablefmt="pipe")
+        print(time_table + "\n")
+
+
+def main(denominations, test_amounts):
+    handler = ChangeMakerHandler(denominations)
     measurer = TimeMeasurer()
 
     greedy_times = []
     dynamic_times = []
-
     results = []
     algorithm_results = []
 
     for amount in test_amounts:
         greedy_result, greedy_time = measurer.measure_time(
-            greedy_maker.find_coins, amount
+            handler.find_coins_greedy, amount
         )
         dynamic_result, dynamic_time = measurer.measure_time(
-            dynamic_maker.find_coins, amount
+            handler.find_coins_dynamic, amount
         )
 
         greedy_times.append(greedy_time)
         dynamic_times.append(dynamic_time)
-
         results.append([amount, greedy_time, dynamic_time])
         algorithm_results.append([amount, greedy_result, dynamic_result])
 
-    result_headers = ["Amount", "Greedy Result", "Dynamic Result"]
-    result_table = tabulate(algorithm_results, headers=result_headers, tablefmt="pipe")
-    print(result_table + "\n")
-
-    time_headers = ["Amount", "Greedy Algorithm Time (s)", "Dynamic Algorithm Time (s)"]
-    time_table = tabulate(results, headers=time_headers, tablefmt="pipe")
-    print(time_table + "\n")
-
-    plt.plot(test_amounts, greedy_times, label="Greedy Algorithm", marker="o")
-    plt.plot(test_amounts, dynamic_times, label="Dynamic Algorithm", marker="o")
-    plt.xlabel("Amount")
-    plt.ylabel("Time (s)")
-    plt.title("Algorithm Performance Comparison")
-    plt.legend()
-    plt.show()
+    ResultHandler.display_tables(algorithm_results, results)
+    ResultHandler.plot_results(test_amounts, greedy_times, dynamic_times)
 
 
 if __name__ == "__main__":
