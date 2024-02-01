@@ -27,6 +27,7 @@ Only Fake Pattern.
 | Knuth_Morris_Pratt | - | 0.002180 sec | - | 0.003429 sec |
 | Rabin_Karp | - | 0.006202 sec | - | 0.004661 sec |
 | String_Search | - | 0.000013 sec | - | 0.000008 sec |
+
 ![Alt text](src/assets/images/image-4.png)![Alt text](src/assets/images/image-5.png)
 
 # SORT ALGORITM
