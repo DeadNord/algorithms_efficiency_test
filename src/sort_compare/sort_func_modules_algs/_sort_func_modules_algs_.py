@@ -9,13 +9,17 @@ def generate_random_data(size):
 
 
 def run_sorting_algorithm(module_name, algorithm, size):
-    setup_code = f"""
-from _sort_func_modules_algs_ import generate_random_data
-from {module_name} import {algorithm}
-data = generate_random_data({size})
-"""
+    module = importlib.import_module(module_name)
+    func = getattr(module, algorithm)
+    data = generate_random_data(size)
+
+    setup_code = f"from {module_name} import {algorithm}"
+
     stmt = f"{algorithm}(data)"
-    time = timeit.timeit(stmt=stmt, setup=setup_code, number=10, globals=globals())
+
+    time = timeit.timeit(
+        stmt=stmt, setup=setup_code, number=10, globals={"data": data, algorithm: func}
+    )
     return time
 
 
