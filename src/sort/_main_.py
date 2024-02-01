@@ -1,8 +1,8 @@
-import timeit
 import random
 import matplotlib.pyplot as plt
 import sys
 import importlib.util
+from tabulate import tabulate
 
 module_path = "src/helper/time_measurer"
 if module_path not in sys.path:
@@ -82,16 +82,24 @@ class MainProgram:
         self.results = {alg: [] for alg in self.sorter.algorithms}
 
     def run(self):
+        all_results = []
+
         for size in self.data_sizes:
-            print(f"\nData Size: {size}")
             data = generate_random_data(size)
+            row = [size]
+
             for title in self.sorter.algorithms:
-                start_time = timeit.default_timer()
-                self.sorter.perform_sorting(title, data)
-                execution_time = timeit.default_timer() - start_time
+                _, execution_time = self.measurer.measure_time(
+                    self.sorter.perform_sorting, title, data
+                )
 
                 self.results[title].append(execution_time)
-                print(f"{title}: {execution_time} seconds")
+                row.append(execution_time)
+
+            all_results.append(row)
+
+        headers = ["Data Size"] + list(self.sorter.algorithms.keys())
+        print(tabulate(all_results, headers=headers, tablefmt="pipe"))
 
         ResultPlotter.plot_results(self.data_sizes, self.results)
 
