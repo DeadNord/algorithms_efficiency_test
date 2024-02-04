@@ -6,7 +6,7 @@ import importlib.util
 data_sizes = [100, 500, 1000, 3000]
 
 # Sort Function
-module_path = "src/sort_compare/sort_func"
+module_path = "src/sort_compare_time/sort_func"
 if module_path not in sys.path:
     sys.path.append(module_path)
 sort_func_module = importlib.import_module("_sort_func_")
@@ -14,7 +14,7 @@ sort_func = sort_func_module.main
 sort_func_results = sort_func(data_sizes)
 
 # Sort Function with import Algorithms
-module_path = "src/sort_compare/sort_func_modules_algs"
+module_path = "src/sort_compare_time/sort_func_modules_algs"
 if module_path not in sys.path:
     sys.path.append(module_path)
 sort_func_modules_algs_module = importlib.import_module("_sort_func_modules_algs_")
@@ -22,7 +22,7 @@ sort_func_modules_algs = sort_func_modules_algs_module.main
 sort_func_modules_algs_results = sort_func_modules_algs(data_sizes)
 
 # Sort Function with import TimeMeasurer
-module_path = "src/sort_compare/sort_func_modules_time"
+module_path = "src/sort_compare_time/sort_func_modules_time"
 if module_path not in sys.path:
     sys.path.append(module_path)
 sort_func_modules_time_module = importlib.import_module("_sort_func_modules_time_")
@@ -30,7 +30,7 @@ sort_func_modules_time = sort_func_modules_time_module.main
 sort_func_modules_time_results = sort_func_modules_time(data_sizes)
 
 # Sort Function with import Algorithms & TimeMeasurer
-module_path = "src/sort_compare/sort_func_modules_all"
+module_path = "src/sort_compare_time/sort_func_modules_all"
 if module_path not in sys.path:
     sys.path.append(module_path)
 sort_func_modules_all_module = importlib.import_module("_sort_func_modules_all_")
@@ -38,7 +38,7 @@ sort_func_modules_all = sort_func_modules_all_module.main
 sort_func_modules_all_results = sort_func_modules_all(data_sizes)
 
 # Sort Classes
-module_path = "src/sort_compare/sort_classes"
+module_path = "src/sort_compare_time/sort_classes"
 if module_path not in sys.path:
     sys.path.append(module_path)
 sort_classes_module = importlib.import_module("_sort_classes_")
@@ -46,7 +46,7 @@ SortClasses = sort_classes_module.MainProgram(data_sizes)
 sort_classes_results = SortClasses.run()
 
 # Sort Classes with Modules
-module_path = "src/sort_compare/sort_classes_modules"
+module_path = "src/sort_compare_time/sort_classes_modules"
 if module_path not in sys.path:
     sys.path.append(module_path)
 sort_classes_modules_module = importlib.import_module("_sort_classes_modules_")
